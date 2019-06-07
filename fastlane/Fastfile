@@ -1,0 +1,3 @@
+lane :test do
+  compilation_time_profiler
+end
