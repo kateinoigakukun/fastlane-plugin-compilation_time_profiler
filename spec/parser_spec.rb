@@ -8,8 +8,8 @@ describe CompilationStatisticsParser do
         parser.parse(line)
       end
       table = parser.finalize
-      expect(table.summary.total).to eq("0.3042")
-      expect(table.summary.total_clock).to eq("0.3130")
+      expect(table.summary.total).to eq("0.0105")
+      expect(table.summary.total_clock).to eq("0.0100")
       expect(table.rows.last.name).to eq("Total")
     end
   end
