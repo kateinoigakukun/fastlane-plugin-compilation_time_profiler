@@ -8,12 +8,13 @@ module Fastlane
         params[:project_paths].each do |project_path|
           override_config(project_path)
         end
+        buildlog_path = Dir.mktmpdir
         build_config = {
           workspace: params[:workspace],
-          scheme: params[:scheme]
+          scheme: params[:scheme],
+          buildlog_path: buildlog_path
         }
-        XcodebuildAction.run(build_config)
-
+        XcbuildAction.run(build_config)
         params[:project_paths].each do |project_path|
           restore_projects(project_path)
         end

@@ -1,3 +1,9 @@
 lane :test do
-  compilation_time_profiler
+  fixture = File.expand_path('../../spec/fixtures', __FILE__)
+      
+  compilation_time_profiler(
+    scheme: "ExampleProject", build_configuration: "Debug",
+    workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
+    project_paths: ["#{fixture}/ExampleProject/ExampleProject.xcodeproj"]
+  )
 end
