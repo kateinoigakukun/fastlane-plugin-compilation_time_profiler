@@ -30,10 +30,10 @@ module Fastlane
         end
         parser.finalize
       end
-      
+
       def self.override_config(project_path)
         project = Xcodeproj::Project.open(project_path)
-        project.save backup_project_path(project_path)
+        project.save(backup_project_path(project_path))
         project.targets.each do |target|
           UI.message("processing #{target.name}")
           target.build_configurations.each do |config|
@@ -45,8 +45,8 @@ module Fastlane
       end
 
       def self.restore_projects(project_path)
-        FileUtils.remove_dir project_path
-        FileUtils.mv backup_project_path(project_path), project_path, force: true
+        FileUtils.remove_dir(project_path)
+        FileUtils.mv(backup_project_path(project_path), project_path, force: true)
       end
 
       def self.backup_project_path(original_project_path)
@@ -81,7 +81,7 @@ module Fastlane
             optional: false,
             is_string: false,
             type: Array
-          ),
+          )
         ]
       end
 

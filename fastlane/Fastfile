@@ -1,6 +1,6 @@
 lane :test do
   fixture = File.expand_path('../../spec/fixtures', __FILE__)
-      
+
   compilation_time_profiler(
     scheme: "ExampleProject", build_configuration: "Debug",
     workspace: "#{fixture}/ExampleWorkspace.xcworkspace",

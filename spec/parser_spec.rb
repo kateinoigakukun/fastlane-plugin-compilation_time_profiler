@@ -14,4 +14,3 @@ describe CompilationStatisticsParser do
     end
   end
 end
-
