@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		C466E98B22AFEC4B00871724 /* ExampleProject.h in Headers */ = {isa = PBXBuildFile; fileRef = C466E98922AFEC4B00871724 /* ExampleProject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C466E99022AFEED000871724 /* Hello.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466E98F22AFEED000871724 /* Hello.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C466E98722AFEC4B00871724 /* ExampleProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ExampleProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C466E98922AFEC4B00871724 /* ExampleProject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleProject.h; sourceTree = "<group>"; };
 		C466E98A22AFEC4B00871724 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C466E98F22AFEED000871724 /* Hello.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hello.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +34,7 @@
 			children = (
 				C466E98922AFEC4B00871724 /* ExampleProject.h */,
 				C466E98A22AFEC4B00871724 /* Info.plist */,
+				C466E98F22AFEED000871724 /* Hello.swift */,
 			);
 			path = ExampleProject;
 			sourceTree = "<group>";
@@ -96,6 +99,7 @@
 				TargetAttributes = {
 					C466E98622AFEC4B00871724 = {
 						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1100;
 					};
 				};
 			};
@@ -132,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C466E99022AFEED000871724 /* Hello.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +146,7 @@
 		C466E98D22AFEC4B00871724 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -158,6 +164,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dev.katei.ExampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -168,6 +175,7 @@
 		C466E98E22AFEC4B00871724 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

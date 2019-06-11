@@ -13,12 +13,15 @@ module Fastlane
         build_config = {
           workspace: params[:workspace],
           scheme: params[:scheme],
+          raw_buildlog: true,
           buildlog_path: buildlog_path
         }
         XcbuildAction.run(build_config)
         params[:project_paths].each do |project_path|
           restore_projects(project_path)
         end
+        require "pry"
+        binding.pry
       end
       
       def self.override_config(project_path)
