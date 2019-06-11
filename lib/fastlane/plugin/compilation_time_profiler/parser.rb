@@ -42,21 +42,21 @@ class CompilationStatisticsParser
   def initialize
     @state = State::INITIAL
     @rows = []
-    @matches = [
+    @transitions = [
       Transition.new(
          from: State::INITIAL,
            to: State::HEADER_SEPARATOR,
-        block: proc do |match| end
+        block: proc do end
       ),
       Transition.new(
          from: State::HEADER_SEPARATOR,
            to: State::HEADER_TITLE,
-        block: proc do |match| end
+        block: proc do end
       ),
       Transition.new(
          from: State::HEADER_TITLE,
            to: State::HEADER_SEPARATOR,
-        block: proc do |match| end
+        block: proc do end
       ),
       Transition.new(
          from: State::HEADER_SEPARATOR,
@@ -68,21 +68,17 @@ class CompilationStatisticsParser
       Transition.new(
          from: State::RESULT_SUMMARY,
            to: State::TABLE_COLUMN,
-        block: proc do |match| end
+        block: proc do end
       ),
       Transition.new(
          from: State::TABLE_COLUMN,
            to: State::TABLE_ROW,
-        block: proc do |m|
-          add_row m
-        end
+        block: method(:add_row)
       ),
       Transition.new(
          from: State::TABLE_ROW,
            to: State::TABLE_ROW,
-        block: proc do |m|
-          add_row m
-        end
+        block: method(:add_row)
       ),
     ]
   end
@@ -96,11 +92,11 @@ class CompilationStatisticsParser
     end
   end
 
-  def process(regex_match, new_state)
-    @matches.each do |match|
-      next unless @state == match.from && new_state == match.to
-      match.block.call(regex_match)
-      @state = match.to
+  def process(match, new_state)
+    @transitions.each do |transition|
+      next unless @state == transition.from && new_state == transition.to
+      transition.block.call(match)
+      @state = new_state
       break
     end
   end
