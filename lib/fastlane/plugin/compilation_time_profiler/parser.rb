@@ -1,53 +1,10 @@
 class CompilationStatisticsParser
-  def initialize
-    @state = State::INITIAL
-    @matches = [
-      Match.new(
-        State::INITIAL,
-        State::HEADER_SEPARATOR,
-        proc do |match| end
-      ),
-      Match.new(
-        State::HEADER_SEPARATOR,
-        State::HEADER_TITLE,
-        proc do |match| end
-      ),
-      Match.new(
-        State::HEADER_TITLE,
-        State::HEADER_SEPARATOR,
-        proc do |match| end
-      ),
-      Match.new(
-        State::HEADER_SEPARATOR,
-        State::RESULT_SUMMARY,
-        proc do |match|
-	  puts "Summary"
-          puts match[1]
-        end
-      ),
-      Match.new(
-        State::RESULT_SUMMARY,
-        State::TABLE_COLUMN,
-        proc do |match| end
-      ),
-      Match.new(
-        State::TABLE_COLUMN,
-        State::TABLE_ROW,
-        proc do |match|
-          puts match[6]
-        end
-      ),
-      Match.new(
-        State::TABLE_ROW,
-        State::TABLE_ROW,
-        proc do |match|
-		puts match.captures.to_s
-        end
-      ),
-    ]
-  end
+  Summary    = Struct.new(:total, :total_clock, keyword_init: true)
+  Row        = Struct.new(:user, :system, :user_system, :clock, :name, keyword_init: true)
+  Table      = Struct.new(:summary, :rows, keyword_init: true)
 
-  Match = Struct.new(:old, :new, :block)
+  Transition = Struct.new(:from, :to, :block, keyword_init: true)
+  Pattern    = Struct.new(:regex, :state, keyword_init: true)
 
   module State
     INITIAL          = 1 << 0
@@ -58,30 +15,77 @@ class CompilationStatisticsParser
     TABLE_ROW        = 1 << 5
   end
 
-  Pattern = Struct.new(:regex, :state)
-
   PATTERNS = [
     Pattern.new(
-      /^===-------------------------------------------------------------------------===$/,
-      State::HEADER_SEPARATOR
+      regex: /^===-------------------------------------------------------------------------===$/,
+      state: State::HEADER_SEPARATOR
     ),
     Pattern.new(
-      /^                               Swift compilation$/,
-      State::HEADER_TITLE
+      regex: /^                               Swift compilation$/,
+      state: State::HEADER_TITLE
     ),
     Pattern.new(
-      /^  Total Execution Time: (.+) seconds \((.+) wall clock\)$/,
-      State::RESULT_SUMMARY
+      regex: /^  Total Execution Time: (.+) seconds \((.+) wall clock\)$/,
+      state: State::RESULT_SUMMARY
     ),
     Pattern.new(
-      /^   ---User Time---   --System Time--   --User\+System--   ---Wall Time---  --- Name ---$/,
-      State::TABLE_COLUMN
+      regex: /^   ---User Time---   --System Time--   --User\+System--   ---Wall Time---  --- Name ---$/,
+      state: State::TABLE_COLUMN
     ),
     Pattern.new(
-      /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (.+)$/,
-      State::TABLE_ROW
+      regex: /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (.+)$/,
+      state: State::TABLE_ROW
     ),
   ]
+
+
+  def initialize
+    @state = State::INITIAL
+    @rows = []
+    @matches = [
+      Transition.new(
+         from: State::INITIAL,
+           to: State::HEADER_SEPARATOR,
+        block: proc do |match| end
+      ),
+      Transition.new(
+         from: State::HEADER_SEPARATOR,
+           to: State::HEADER_TITLE,
+        block: proc do |match| end
+      ),
+      Transition.new(
+         from: State::HEADER_TITLE,
+           to: State::HEADER_SEPARATOR,
+        block: proc do |match| end
+      ),
+      Transition.new(
+         from: State::HEADER_SEPARATOR,
+           to: State::RESULT_SUMMARY,
+        block: proc do |match|
+          @summary = Summary.new(total: match[1], total_clock: match[2])
+        end
+      ),
+      Transition.new(
+         from: State::RESULT_SUMMARY,
+           to: State::TABLE_COLUMN,
+        block: proc do |match| end
+      ),
+      Transition.new(
+         from: State::TABLE_COLUMN,
+           to: State::TABLE_ROW,
+        block: proc do |m|
+          add_row m
+        end
+      ),
+      Transition.new(
+         from: State::TABLE_ROW,
+           to: State::TABLE_ROW,
+        block: proc do |m|
+          add_row m
+        end
+      ),
+    ]
+  end
 
 
   def parse(line)
@@ -94,11 +98,26 @@ class CompilationStatisticsParser
 
   def process(regex_match, new_state)
     @matches.each do |match|
-      next unless @state == match.old && new_state == match.new
+      next unless @state == match.from && new_state == match.to
       match.block.call(regex_match)
-      @state = match.new
+      @state = match.to
       break
     end
+  end
+
+
+  def add_row(match)
+    @rows.push Row.new(
+             user: match[1],
+           system: match[3],
+      user_system: match[5],
+            clock: [7],
+             name: match[9]
+    )
+  end
+
+  def finalize
+    Table.new(summary: @summary, rows: @rows)
   end
 end
 
