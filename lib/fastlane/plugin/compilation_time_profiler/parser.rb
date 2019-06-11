@@ -21,6 +21,7 @@ class CompilationStatisticsParser
         State::HEADER_SEPARATOR,
         State::RESULT_SUMMARY,
         proc do |match|
+	  puts "Summary"
           puts match[1]
         end
       ),
@@ -33,14 +34,14 @@ class CompilationStatisticsParser
         State::TABLE_COLUMN,
         State::TABLE_ROW,
         proc do |match|
-          puts match[1]
+          puts match[6]
         end
       ),
       Match.new(
         State::TABLE_ROW,
         State::TABLE_ROW,
         proc do |match|
-          puts match[1]
+		puts match.captures.to_s
         end
       ),
     ]
@@ -77,17 +78,17 @@ class CompilationStatisticsParser
       State::TABLE_COLUMN
     ),
     Pattern.new(
-      /^   (.+) \( (.+)%\)   (.+) \( (.+)%\)   (.+) \( (.+)%\)   (.+) \( (.+)%\)  (.+)$/,
+      /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (.+)$/,
       State::TABLE_ROW
     ),
   ]
 
 
   def parse(line)
-    PATTERNS.detect do |pattern|
-      pattern.regex.match(line) do |match|
-        process(match, pattern.state)
-      end
+    PATTERNS.each do |pattern|
+      next unless match = pattern.regex.match(line)
+      process(match, pattern.state)
+      break
     end
   end
 
