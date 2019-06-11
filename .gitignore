@@ -55,4 +55,5 @@ build-iPhoneSimulator/
 .rvmrc
 
 .DS_Store
+fastlane/report.xml
 
