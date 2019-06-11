@@ -5,7 +5,7 @@ describe Fastlane::Actions::CompilationTimeProfilerAction do
       Fastlane::Actions::CompilationTimeProfilerAction.run(
         scheme: "ExampleProject", build_configuration: "Debug",
          workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
-         project_paths: ["#{fixture}/ExampleProject.xcodeproj"]
+         project_paths: ["#{fixture}/ExampleProject/ExampleProject.xcodeproj"]
       )
     end
   end

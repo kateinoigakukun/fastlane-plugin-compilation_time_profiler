@@ -8,26 +8,39 @@ module Fastlane
         params[:project_paths].each do |project_path|
           override_config(project_path)
         end
-
-        Gym.run(
+        build_config = {
           workspace: params[:workspace],
-          configuration: config[:build_configuration],
-          scheme: config[:scheme],
-          destination: 'platform=iOS Simulator,name=iPhone XS,OS=latest'
-        )
+          scheme: params[:scheme]
+        }
+        XcodebuildAction.run(build_config)
+
+        params[:project_paths].each do |project_path|
+          restore_projects(project_path)
+        end
       end
       
       def self.override_config(project_path)
         project = Xcodeproj::Project.open(project_path)
+        project.save backup_project_path(project_path)
         project.targets.each do |target|
-          next unless targets.include?(target.name)
           UI.message("processing #{target.name}")
           target.build_configurations.each do |config|
             config.build_settings['OTHER_SWIFT_FLAGS'] = '-Xfrontend -debug-time-compilation'
             config.build_settings['SWIFT_WHOLE_MODULE_OPTIMIZATION'] = 'YES'
           end
         end
-        project.save()
+        project.save(project_path)
+      end
+
+      def self.restore_projects(project_path)
+        FileUtils.remove_dir project_path
+        FileUtils.mv backup_project_path(project_path), project_path, force: true
+      end
+
+      def self.backup_project_path(original_project_path)
+        original_project = Pathname.new(original_project_path)
+        backup_project_name = original_project.basename.sub(/(.+)\./) { "#{$1}_Profile." }
+        original_project.dirname.join(backup_project_name).to_s
       end
 
       def self.available_options

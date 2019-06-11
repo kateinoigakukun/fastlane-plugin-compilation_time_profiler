@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="rspec" tests="1" skipped="0" failures="1" errors="0" time="0.048032" timestamp="2019-06-07T17:33:31+09:00" hostname="PC3324">
+<testsuite name="rspec" tests="1" skipped="0" failures="0" errors="0" time="0.120421" timestamp="2019-06-11T18:29:11+09:00" hostname="PC3324">
 <properties>
-<property name="seed" value="60865"/>
+<property name="seed" value="48885"/>
 </properties>
-<testcase classname="spec.compilation_time_profiler_action_spec" name="Fastlane::Actions::CompilationTimeProfilerAction#run #run" file="./spec/compilation_time_profiler_action_spec.rb" time="0.046204"><failure message="[Xcodeproj] Unable to open `/Users/kateinoigakukun/projects/compilation-time-profiler/fastlane-plugin-compilation_time_profiler/spec/fixtures/ExampleProject.xcodeproj` because it doesn&apos;t exist." type="RuntimeError">Failure/Error: project = Xcodeproj::Project.open(project_path)
-
-RuntimeError:
-  [Xcodeproj] Unable to open `/Users/kateinoigakukun/projects/compilation-time-profiler/fastlane-plugin-compilation_time_profiler/spec/fixtures/ExampleProject.xcodeproj` because it doesn&apos;t exist.
-./vendor/bundle/ruby/2.4.0/gems/xcodeproj-1.9.0/lib/xcodeproj/project.rb:109:in `open&apos;
-./lib/fastlane/plugin/compilation_time_profiler/actions/compilation_time_profiler_action.rb:21:in `override_config&apos;
-./lib/fastlane/plugin/compilation_time_profiler/actions/compilation_time_profiler_action.rb:9:in `block in run&apos;
-./lib/fastlane/plugin/compilation_time_profiler/actions/compilation_time_profiler_action.rb:8:in `each&apos;
-./lib/fastlane/plugin/compilation_time_profiler/actions/compilation_time_profiler_action.rb:8:in `run&apos;
-./spec/compilation_time_profiler_action_spec.rb:5:in `block (3 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+<testcase classname="spec.compilation_time_profiler_action_spec" name="Fastlane::Actions::CompilationTimeProfilerAction#run #run" file="./spec/compilation_time_profiler_action_spec.rb" time="0.117992"></testcase>
 </testsuite>
