@@ -9,19 +9,26 @@ module Fastlane
         params[:project_paths].each do |project_path|
           override_config(project_path)
         end
-        buildlog_path = Dir.mktmpdir
+        buildlog_dir = Dir.mktmpdir
         build_config = {
           workspace: params[:workspace],
           scheme: params[:scheme],
+          clean: true,
           raw_buildlog: true,
-          buildlog_path: buildlog_path
+          buildlog_path: buildlog_dir
         }
         XcbuildAction.run(build_config)
         params[:project_paths].each do |project_path|
           restore_projects(project_path)
         end
-        require "pry"
-        binding.pry
+
+        buildlog_path = Pathname.new(buildlog_dir).join("xcodebuild.log").to_s
+
+        parser = CompilationStatisticsParser.new
+        File.read(buildlog_path).lines.each do |line|
+          parser.parse(line)
+        end
+        parser.finalize
       end
       
       def self.override_config(project_path)

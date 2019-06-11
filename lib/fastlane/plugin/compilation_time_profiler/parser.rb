@@ -107,7 +107,7 @@ class CompilationStatisticsParser
              user: match[1],
            system: match[3],
       user_system: match[5],
-            clock: [7],
+            clock: match[7],
              name: match[9]
     )
   end
