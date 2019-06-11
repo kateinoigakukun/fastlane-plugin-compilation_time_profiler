@@ -100,13 +100,15 @@ class CompilationStatisticsParser
   end
 
   def add_row(match)
-    @rows.push(Row.new(
-                 user: match[1],
-               system: match[3],
-                 user_system: match[5],
-                clock: match[7],
-                 name: match[9]
-    ))
+    @rows.push(
+      Row.new(
+        user:        match[1],
+        system:      match[3],
+        user_system: match[5],
+        clock:       match[7],
+        name:        match[9]
+      )
+    )
   end
 
   def finalize
