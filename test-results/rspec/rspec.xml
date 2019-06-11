@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="rspec" tests="1" skipped="0" failures="0" errors="0" time="0.120421" timestamp="2019-06-11T18:29:11+09:00" hostname="PC3324">
-<properties>
-<property name="seed" value="48885"/>
-</properties>
-<testcase classname="spec.compilation_time_profiler_action_spec" name="Fastlane::Actions::CompilationTimeProfilerAction#run #run" file="./spec/compilation_time_profiler_action_spec.rb" time="0.117992"></testcase>
-</testsuite>
