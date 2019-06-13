@@ -4,6 +4,9 @@ lane :test do
   compilation_time_profiler(
     scheme: "ExampleProject", build_configuration: "Debug",
     workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
-    project_paths: ["#{fixture}/ExampleProject/ExampleProject.xcodeproj"]
+    project_paths: [
+      "#{fixture}/ExampleProject/ExampleProject.xcodeproj",
+      "#{fixture}/OtherProject/OtherProject.xcodeproj"
+    ]
   )
 end
