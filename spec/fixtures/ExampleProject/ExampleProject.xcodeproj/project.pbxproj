@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C466E98B22AFEC4B00871724 /* ExampleProject.h in Headers */ = {isa = PBXBuildFile; fileRef = C466E98922AFEC4B00871724 /* ExampleProject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C466E99022AFEED000871724 /* Hello.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466E98F22AFEED000871724 /* Hello.swift */; };
+		F2A7587E22B261F2005B325B /* OtherProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A7587D22B261F2005B325B /* OtherProject.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		C466E98922AFEC4B00871724 /* ExampleProject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleProject.h; sourceTree = "<group>"; };
 		C466E98A22AFEC4B00871724 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C466E98F22AFEED000871724 /* Hello.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hello.swift; sourceTree = "<group>"; };
+		F2A7587D22B261F2005B325B /* OtherProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OtherProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23,6 +25,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A7587E22B261F2005B325B /* OtherProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +47,7 @@
 			children = (
 				C466E98822AFEC4B00871724 /* ExampleProject */,
 				F2A7580922AA56F9005B325B /* Products */,
+				F2A7587C22B261F2005B325B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +57,14 @@
 				C466E98722AFEC4B00871724 /* ExampleProject.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F2A7587C22B261F2005B325B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2A7587D22B261F2005B325B /* OtherProject.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,11 +173,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-compilation";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.katei.ExampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -190,10 +204,12 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-compilation";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.katei.ExampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
