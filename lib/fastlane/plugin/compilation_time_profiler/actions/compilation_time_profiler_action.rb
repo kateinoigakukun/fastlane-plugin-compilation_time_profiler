@@ -6,6 +6,7 @@ module Fastlane
     class CompilationTimeProfilerAction < Action
       def self.run(params)
         params[:project_paths].each do |project_path|
+          backup_project(project_path)
           override_config(project_path)
         end
         buildlog_dir = Dir.mktmpdir
@@ -32,7 +33,6 @@ module Fastlane
 
       def self.override_config(project_path)
         project = Xcodeproj::Project.open(project_path)
-        project.save(backup_project_path(project_path))
         project.targets.each do |target|
           UI.message("processing #{target.name}")
           target.build_configurations.each do |config|
@@ -41,6 +41,11 @@ module Fastlane
           end
         end
         project.save(project_path)
+      end
+
+      def self.backup_project(project_path)
+        FileUtils.remove_dir(backup_project_path(project_path))
+        FileUtils.copy(project_path, backup_project_path(project_path))
       end
 
       def self.restore_projects(project_path)
