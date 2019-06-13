@@ -55,5 +55,12 @@ build-iPhoneSimulator/
 .rvmrc
 
 .DS_Store
+/.yardoc/
+/_yardoc/
+/doc/
+/rdoc/
+fastlane/README.md
 fastlane/report.xml
-
+coverage
+test-results
+vendor
