@@ -1,5 +1,5 @@
 require 'fastlane/action'
-require_relative '../helper/compilation_time_profiler_helper'
+require_relative '../helper/compilation-time-profiler_helper'
 
 module Fastlane
   module Actions

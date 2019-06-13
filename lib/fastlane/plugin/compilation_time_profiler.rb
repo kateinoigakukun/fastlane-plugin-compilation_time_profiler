@@ -1,4 +1,4 @@
-require 'fastlane/plugin/compilation_time_profiler/version'
+require 'fastlane/plugin/compilation-time-profiler/version'
 
 module Fastlane
   module CompilationTimeProfiler

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fastlane-plugin-compilation_time_profiler (0.1.0)
+    fastlane-plugin-compilation-time-profiler (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -205,7 +205,7 @@ PLATFORMS
 DEPENDENCIES
   bundler
   fastlane (>= 2.117.1)
-  fastlane-plugin-compilation_time_profiler!
+  fastlane-plugin-compilation-time-profiler!
   pry
   rake
   rspec

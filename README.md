@@ -1,16 +1,16 @@
-# compilation_time_profiler plugin
+# compilation-time-profiler plugin
 
-[![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-compilation_time_profiler)
+[![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-compilation-time-profiler)
 
 ## Getting Started
 
-This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To get started with `fastlane-plugin-compilation_time_profiler`, add it to your project by running:
+This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To get started with `fastlane-plugin-compilation-time-profiler`, add it to your project by running:
 
 ```bash
-fastlane add_plugin compilation_time_profiler
+fastlane add_plugin compilation-time-profiler
 ```
 
-## About compilation_time_profiler
+## About compilation-time-profiler
 
 Profile Swift compilation time
 

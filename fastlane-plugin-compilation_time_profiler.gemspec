@@ -2,16 +2,16 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fastlane/plugin/compilation_time_profiler/version'
+require 'fastlane/plugin/compilation-time-profiler/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'fastlane-plugin-compilation_time_profiler'
+  spec.name          = 'fastlane-plugin-compilation-time-profiler'
   spec.version       = Fastlane::CompilationTimeProfiler::VERSION
   spec.author        = 'Yuta Saito'
   spec.email         = 'kateinoigakukun@gmail.com'
 
   spec.summary       = 'Profile Swift compilation time'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-compilation_time_profiler"
+  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-compilation-time-profiler"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
