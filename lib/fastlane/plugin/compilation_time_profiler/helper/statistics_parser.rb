@@ -1,10 +1,10 @@
 class CompilationStatisticsParser
-  Summary    = Struct.new(:total, :total_clock, keyword_init: true)
-  Row        = Struct.new(:user, :system, :user_system, :clock, :name, keyword_init: true)
-  Table      = Struct.new(:summary, :rows, keyword_init: true)
+  Summary    = Struct.new(:total, :total_clock)
+  Row        = Struct.new(:user, :system, :user_system, :clock, :name)
+  Table      = Struct.new(:summary, :rows)
 
-  Transition = Struct.new(:from, :to, :block, keyword_init: true)
-  Pattern    = Struct.new(:regex, :state, keyword_init: true)
+  Transition = Struct.new(:from, :to, :block)
+  Pattern    = Struct.new(:regex, :state)
 
   module State
     INITIAL          = 1 << 0
@@ -17,24 +17,24 @@ class CompilationStatisticsParser
 
   PATTERNS = [
     Pattern.new(
-      regex: /^===-------------------------------------------------------------------------===$/,
-      state: State::HEADER_SEPARATOR
+      /^===-------------------------------------------------------------------------===$/, # regex
+      State::HEADER_SEPARATOR                                                              # state
     ),
     Pattern.new(
-      regex: /^                               Swift compilation$/,
-      state: State::HEADER_TITLE
+      /^                               Swift compilation$/,
+      State::HEADER_TITLE
     ),
     Pattern.new(
-      regex: /^  Total Execution Time: (.+) seconds \((.+) wall clock\)$/,
-      state: State::RESULT_SUMMARY
+      /^  Total Execution Time: (.+) seconds \((.+) wall clock\)$/,
+      State::RESULT_SUMMARY
     ),
     Pattern.new(
-      regex: /^   ---User Time---   --System Time--   --User\+System--   ---Wall Time---  --- Name ---$/,
-      state: State::TABLE_COLUMN
+      /^   ---User Time---   --System Time--   --User\+System--   ---Wall Time---  --- Name ---$/,
+      State::TABLE_COLUMN
     ),
     Pattern.new(
-      regex: /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (.+)$/,
-      state: State::TABLE_ROW
+      /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (.+)$/,
+      State::TABLE_ROW
     )
   ]
 
@@ -43,41 +43,44 @@ class CompilationStatisticsParser
     @rows = []
     @transitions = [
       Transition.new(
-        from: State::INITIAL,
-          to: State::HEADER_SEPARATOR,
-       block: proc do end
+        State::INITIAL,          # from
+        State::HEADER_SEPARATOR, # to
+        proc do end
       ),
       Transition.new(
-        from: State::HEADER_SEPARATOR,
-          to: State::HEADER_TITLE,
-       block: proc do end
+        State::HEADER_SEPARATOR,
+        State::HEADER_TITLE,
+        proc do end
       ),
       Transition.new(
-        from: State::HEADER_TITLE,
-          to: State::HEADER_SEPARATOR,
-       block: proc do end
+        State::HEADER_TITLE,
+        State::HEADER_SEPARATOR,
+        proc do end
       ),
       Transition.new(
-        from: State::HEADER_SEPARATOR,
-          to: State::RESULT_SUMMARY,
-       block: proc do |match|
-         @summary = Summary.new(total: match[1], total_clock: match[2])
-       end
+        State::HEADER_SEPARATOR,
+        State::RESULT_SUMMARY,
+        proc do |match|
+          @summary = Summary.new(
+            match[1], # total
+            match[2]  # total_clock
+          )
+        end
       ),
       Transition.new(
-        from: State::RESULT_SUMMARY,
-          to: State::TABLE_COLUMN,
-       block: proc do end
+        State::RESULT_SUMMARY,
+        State::TABLE_COLUMN,
+        proc do end
       ),
       Transition.new(
-        from: State::TABLE_COLUMN,
-          to: State::TABLE_ROW,
-       block: method(:add_row)
+        State::TABLE_COLUMN,
+        State::TABLE_ROW,
+        method(:add_row)
       ),
       Transition.new(
-        from: State::TABLE_ROW,
-          to: State::TABLE_ROW,
-       block: method(:add_row)
+        State::TABLE_ROW,
+        State::TABLE_ROW,
+        method(:add_row)
       )
     ]
   end
@@ -102,16 +105,16 @@ class CompilationStatisticsParser
   def add_row(match)
     @rows.push(
       Row.new(
-        user:        match[1],
-        system:      match[3],
-        user_system: match[5],
-        clock:       match[7],
-        name:        match[9]
+        match[1], # user
+        match[3], # system
+        match[5], # user_system
+        match[7], # clock
+        match[9]  # name
       )
     )
   end
 
   def finalize
-    Table.new(summary: @summary, rows: @rows)
+    Table.new(@summary, @rows)
   end
 end
