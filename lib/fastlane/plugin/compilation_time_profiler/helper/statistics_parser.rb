@@ -128,12 +128,12 @@ class CompilationStatisticsParser
   def parse(line)
     PATTERNS.each do |pattern|
       next unless match = pattern.regex.match(line)
-      process(match, pattern.state)
+      transit(match, pattern.state)
       break
     end
   end
 
-  def process(match, new_state)
+  def transit(match, new_state)
     @transitions.each do |transition|
       next unless @state == transition.from && new_state == transition.to
       @state = new_state
