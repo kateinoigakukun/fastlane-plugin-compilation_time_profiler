@@ -7,9 +7,13 @@ describe CompilationStatisticsParser do
       log.lines.each do |line|
         parser.parse(line)
       end
-      table = parser.finalize
-      expect(table.summary.total).to eq("0.0105")
-      expect(table.summary.total_clock).to eq("0.0100")
+      tables = parser.finalize
+      expect(tables.length).to eq(2)
+      table = tables.first
+      expect(table.target).to eq("OtherProject")
+      expect(table.rows.length).to eq(12)
+      expect(table.summary.total).to eq("0.0038")
+      expect(table.summary.total_clock).to eq("0.0031")
       expect(table.rows.last.name).to eq("Total")
     end
   end

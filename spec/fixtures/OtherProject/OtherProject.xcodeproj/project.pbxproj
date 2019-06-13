@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		F2A7587622B261D2005B325B /* OtherProject.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A7587422B261D2005B325B /* OtherProject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F2A7588022B262AB005B325B /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A7587F22B262AB005B325B /* World.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F2A7587122B261D2005B325B /* OtherProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OtherProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A7587422B261D2005B325B /* OtherProject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherProject.h; sourceTree = "<group>"; };
 		F2A7587522B261D2005B325B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A7587F22B262AB005B325B /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 		F2A7587322B261D2005B325B /* OtherProject */ = {
 			isa = PBXGroup;
 			children = (
+				F2A7587F22B262AB005B325B /* World.swift */,
 				F2A7587422B261D2005B325B /* OtherProject.h */,
 				F2A7587522B261D2005B325B /* Info.plist */,
 			);
@@ -95,6 +98,7 @@
 				TargetAttributes = {
 					F2A7587022B261D2005B325B = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -130,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A7588022B262AB005B325B /* World.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +266,7 @@
 		F2A7587A22B261D2005B325B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -278,6 +284,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = katei.OtherProject;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -287,6 +294,7 @@
 		F2A7587B22B261D2005B325B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

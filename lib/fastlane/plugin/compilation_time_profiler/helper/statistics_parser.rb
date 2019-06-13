@@ -1,24 +1,30 @@
 class CompilationStatisticsParser
   Summary    = Struct.new(:total, :total_clock)
   Row        = Struct.new(:user, :system, :user_system, :clock, :name)
-  Table      = Struct.new(:summary, :rows)
+  Table      = Struct.new(:target, :summary, :rows)
 
   Transition = Struct.new(:from, :to, :block)
   Pattern    = Struct.new(:regex, :state)
 
   module State
-    INITIAL          = 1 << 0
-    HEADER_SEPARATOR = 1 << 1
-    HEADER_TITLE     = 1 << 2
-    RESULT_SUMMARY   = 1 << 3
-    TABLE_COLUMN     = 1 << 4
-    TABLE_ROW        = 1 << 5
+    INITIAL          = "INITIAL         " #1 << 0
+    BUILDING         = "BUILDING        " #1 << 1
+    HEADER_SEPARATOR = "HEADER_SEPARATOR" #1 << 2
+    HEADER_TITLE     = "HEADER_TITLE    " #1 << 3
+    RESULT_SUMMARY   = "RESULT_SUMMARY  " #1 << 4
+    TABLE_COLUMN     = "TABLE_COLUMN    " #1 << 5
+    TABLE_ROW        = "TABLE_ROW       " #1 << 6
+    TABLE_LAST_ROW   = "TABLE_LAST_ROW  " #1 << 7
   end
 
   PATTERNS = [
     Pattern.new(
-      /^===-------------------------------------------------------------------------===$/, # regex
-      State::HEADER_SEPARATOR                                                              # state
+      /.+ \(in target: (.+)\)$/, # regex
+      State::BUILDING           # state
+    ),
+    Pattern.new(
+      /^===-------------------------------------------------------------------------===$/,
+      State::HEADER_SEPARATOR
     ),
     Pattern.new(
       /^                               Swift compilation$/,
@@ -33,18 +39,36 @@ class CompilationStatisticsParser
       State::TABLE_COLUMN
     ),
     Pattern.new(
+      /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (Total)$/,
+      State::TABLE_LAST_ROW
+    ),
+    Pattern.new(
       /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (.+)$/,
       State::TABLE_ROW
-    )
+    ),
   ]
 
   def initialize
-    @state = State::INITIAL
-    @rows = []
+    @tables = []
+    clear_state
     @transitions = [
       Transition.new(
-        State::INITIAL,          # from
-        State::HEADER_SEPARATOR, # to
+        State::INITIAL,  # from
+        State::BUILDING, # to
+        proc do |match|
+          @building_target = match[1]
+        end
+      ),
+      Transition.new(
+        State::BUILDING,
+        State::BUILDING,
+        proc do |match|
+          @building_target = match[1]
+        end
+      ),
+      Transition.new(
+        State::BUILDING,
+        State::HEADER_SEPARATOR,
         proc do end
       ),
       Transition.new(
@@ -81,8 +105,24 @@ class CompilationStatisticsParser
         State::TABLE_ROW,
         State::TABLE_ROW,
         method(:add_row)
+      ),
+      Transition.new(
+        State::TABLE_ROW,
+        State::TABLE_LAST_ROW,
+        proc do |match|
+          add_row(match)
+          @tables.push(
+            Table.new(@building_target, @summary, @rows)
+          )
+          clear_state
+        end
       )
     ]
+  end
+
+  def clear_state
+    @state = State::INITIAL
+    @rows = []
   end
 
   def parse(line)
@@ -96,8 +136,8 @@ class CompilationStatisticsParser
   def process(match, new_state)
     @transitions.each do |transition|
       next unless @state == transition.from && new_state == transition.to
-      transition.block.call(match)
       @state = new_state
+      transition.block.call(match)
       break
     end
   end
@@ -115,6 +155,6 @@ class CompilationStatisticsParser
   end
 
   def finalize
-    Table.new(@summary, @rows)
+    @tables
   end
 end
