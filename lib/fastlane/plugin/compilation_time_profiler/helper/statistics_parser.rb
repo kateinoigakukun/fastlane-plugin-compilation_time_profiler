@@ -7,20 +7,20 @@ class CompilationStatisticsParser
   Pattern    = Struct.new(:regex, :state)
 
   module State
-    INITIAL          = "INITIAL         " #1 << 0
-    BUILDING         = "BUILDING        " #1 << 1
-    HEADER_SEPARATOR = "HEADER_SEPARATOR" #1 << 2
-    HEADER_TITLE     = "HEADER_TITLE    " #1 << 3
-    RESULT_SUMMARY   = "RESULT_SUMMARY  " #1 << 4
-    TABLE_COLUMN     = "TABLE_COLUMN    " #1 << 5
-    TABLE_ROW        = "TABLE_ROW       " #1 << 6
-    TABLE_LAST_ROW   = "TABLE_LAST_ROW  " #1 << 7
+    INITIAL          = 1 << 0
+    BUILDING         = 1 << 1
+    HEADER_SEPARATOR = 1 << 2
+    HEADER_TITLE     = 1 << 3
+    RESULT_SUMMARY   = 1 << 4
+    TABLE_COLUMN     = 1 << 5
+    TABLE_ROW        = 1 << 6
+    TABLE_LAST_ROW   = 1 << 7
   end
 
   PATTERNS = [
     Pattern.new(
       /.+ \(in target: (.+)\)$/, # regex
-      State::BUILDING           # state
+      State::BUILDING            # state
     ),
     Pattern.new(
       /^===-------------------------------------------------------------------------===$/,
