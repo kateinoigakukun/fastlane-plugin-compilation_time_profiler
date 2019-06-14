@@ -2,11 +2,11 @@
 //  OtherProject.h
 //  OtherProject
 //
-//  Created by kateinoigakukun on 2019/06/13.
+//  Created by kateinoigakukun on 2019/06/14.
 //  Copyright © 2019 katei. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Cocoa/Cocoa.h>
 
 //! Project version number for OtherProject.
 FOUNDATION_EXPORT double OtherProjectVersionNumber;

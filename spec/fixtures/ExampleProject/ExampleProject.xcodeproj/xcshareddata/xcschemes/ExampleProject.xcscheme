@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C466E98622AFEC4B00871724"
+               BlueprintIdentifier = "F2A758F122B390C1005B325B"
                BuildableName = "ExampleProject.framework"
                BlueprintName = "ExampleProject"
                ReferencedContainer = "container:ExampleProject.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2A758E122B38FEF005B325B"
+               BlueprintIdentifier = "F2A758FD22B390FD005B325B"
                BuildableName = "ExampleProjectTests.xctest"
                BlueprintName = "ExampleProjectTests"
                ReferencedContainer = "container:ExampleProject.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C466E98622AFEC4B00871724"
+            BlueprintIdentifier = "F2A758F122B390C1005B325B"
             BuildableName = "ExampleProject.framework"
             BlueprintName = "ExampleProject"
             ReferencedContainer = "container:ExampleProject.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C466E98622AFEC4B00871724"
+            BlueprintIdentifier = "F2A758F122B390C1005B325B"
             BuildableName = "ExampleProject.framework"
             BlueprintName = "ExampleProject"
             ReferencedContainer = "container:ExampleProject.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C466E98622AFEC4B00871724"
+            BlueprintIdentifier = "F2A758F122B390C1005B325B"
             BuildableName = "ExampleProject.framework"
             BlueprintName = "ExampleProject"
             ReferencedContainer = "container:ExampleProject.xcodeproj">
