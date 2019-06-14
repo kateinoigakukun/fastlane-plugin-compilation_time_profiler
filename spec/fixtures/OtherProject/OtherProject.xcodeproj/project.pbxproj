@@ -6,6 +6,10 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F2A7591C22B39243005B325B /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A7587F22B262AB005B325B /* World.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		F2A7587422B261D2005B325B /* OtherProject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherProject.h; sourceTree = "<group>"; };
 		F2A7587522B261D2005B325B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A7591C22B39243005B325B /* World.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
