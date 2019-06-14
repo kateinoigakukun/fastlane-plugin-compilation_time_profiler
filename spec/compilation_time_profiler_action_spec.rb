@@ -1,14 +1,21 @@
 describe Fastlane::Actions::CompilationTimeProfilerAction do
   describe '#run' do
+    let(:buildlog_dir) { "/tmp/foo/bar" }
     it '#run' do
       fixture = File.expand_path('../fixtures', __FILE__)
-      allow(Dir).to receive(:mktmpdir).and_return("/tmp/foo/bar")
       allow(File).to receive(:read).and_call_original
-      allow(File).to receive(:read).with("/tmp/foo/bar/xcodebuild.log").and_return('')
+      allow(File).to receive(:read).with("#{buildlog_dir}/xcodebuild.log").and_return('')
       Fastlane::Actions::CompilationTimeProfilerAction.run(
-        scheme: "ExampleProject", build_configuration: "Debug",
-         workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
-         project_paths: ["#{fixture}/ExampleProject/ExampleProject.xcodeproj"]
+         project_paths: ["#{fixture}/ExampleProject/ExampleProject.xcodeproj"],
+         buildlog_path: buildlog_dir,
+         action: proc do
+          config = {
+            buildlog_path: buildlog_dir,
+            scheme: "ExampleProject",
+            workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
+          }
+          Fastlane::Actions::RunTestsAction.run(config)
+         end
       )
     end
   end

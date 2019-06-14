@@ -15,7 +15,8 @@ module Fastlane
         end
 
         parser = CompilationStatisticsParser.new
-        File.read(params[:buildlog_path]).lines.each do |line|
+        buildlog_file = "#{params[:buildlog_path]}/xcodebuild.log"
+        File.read(buildlog_file).lines.each do |line|
           parser.parse(line)
         end
         parser.finalize

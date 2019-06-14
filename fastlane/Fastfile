@@ -1,12 +1,20 @@
 lane :test do
   fixture = File.expand_path('../../spec/fixtures', __FILE__)
+  buildlog_dir = Dir.mktmpdir
 
   compilation_time_profiler(
-    scheme: "ExampleProject", build_configuration: "Debug",
-    workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
     project_paths: [
       "#{fixture}/ExampleProject/ExampleProject.xcodeproj",
       "#{fixture}/OtherProject/OtherProject.xcodeproj"
-    ]
+    ],
+    buildlog_path: buildlog_dir,
+    action: proc do
+     config = {
+       buildlog_path: buildlog_dir,
+       scheme: "ExampleProject",
+       workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
+     }
+     run_tests(config)
+    end
   )
 end
