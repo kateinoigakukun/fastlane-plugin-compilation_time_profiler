@@ -9,23 +9,13 @@ module Fastlane
           backup_project(project_path)
           override_config(project_path)
         end
-        buildlog_dir = Dir.mktmpdir
-        build_config = {
-          workspace: params[:workspace],
-          scheme: params[:scheme],
-          clean: true,
-          raw_buildlog: true,
-          buildlog_path: buildlog_dir
-        }
-        XcbuildAction.run(build_config)
+        params[:action].call()
         params[:project_paths].each do |project_path|
           restore_projects(project_path)
         end
 
-        buildlog_path = Pathname.new(buildlog_dir).join("xcodebuild.log").to_s
-
         parser = CompilationStatisticsParser.new
-        File.read(buildlog_path).lines.each do |line|
+        File.read(params[:buildlog_path]).lines.each do |line|
           parser.parse(line)
         end
         parser.finalize
@@ -61,29 +51,24 @@ module Fastlane
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(
-            key: :scheme,
-            description: "Build Scheme",
-            is_string: true,
-            optional: false
-          ),
-          FastlaneCore::ConfigItem.new(
-            key: :build_configuration,
-            description: "Build Configuration",
-            is_string: true,
-            optional: false
-          ),
-          FastlaneCore::ConfigItem.new(
-            key: :workspace,
-            description: "Workspace to profile",
-            is_string: true,
-            optional: true
-          ),
-          FastlaneCore::ConfigItem.new(
             key: :project_paths,
-            description: "Projects to profile",
+            description: "Project paths to profile",
             optional: false,
             is_string: false,
             type: Array
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :buildlog_path,
+            description: "Path to xcodebuild.log",
+            optional: false,
+            is_string: true,
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :action,
+            description: "Build action to profile like scan",
+            optional: false,
+            is_string: false,
+            type: Proc
           )
         ]
       end
