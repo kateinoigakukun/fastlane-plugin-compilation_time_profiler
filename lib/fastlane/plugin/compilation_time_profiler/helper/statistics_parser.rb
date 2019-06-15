@@ -127,7 +127,8 @@ class CompilationStatisticsParser
 
   def parse(line)
     PATTERNS.each do |pattern|
-      next unless match = pattern.regex.match(line)
+      match = pattern.regex.match(line)
+      next if match.nil?
       transit(match, pattern.state)
       break
     end
