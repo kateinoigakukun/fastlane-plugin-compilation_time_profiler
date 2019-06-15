@@ -9,12 +9,12 @@ lane :test do
     ],
     buildlog_path: buildlog_dir,
     action: proc do
-     config = {
-       buildlog_path: buildlog_dir,
-       scheme: "ExampleProject",
-       workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
-     }
-     run_tests(config)
+      config = {
+        buildlog_path: buildlog_dir,
+        scheme: "ExampleProject",
+        workspace: "#{fixture}/ExampleWorkspace.xcworkspace"
+      }
+      run_tests(config)
     end
   )
 end

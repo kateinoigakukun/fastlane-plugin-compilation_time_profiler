@@ -9,7 +9,7 @@ module Fastlane
           backup_project(project_path)
           override_config(project_path)
         end
-        params[:action].call()
+        params[:action].call
         params[:project_paths].each do |project_path|
           restore_projects(project_path)
         end
@@ -62,7 +62,7 @@ module Fastlane
             key: :buildlog_path,
             description: "Path to xcodebuild.log",
             optional: false,
-            is_string: true,
+            is_string: true
           ),
           FastlaneCore::ConfigItem.new(
             key: :action,

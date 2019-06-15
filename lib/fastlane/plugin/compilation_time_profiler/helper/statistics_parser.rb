@@ -45,7 +45,7 @@ class CompilationStatisticsParser
     Pattern.new(
       /^   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)   (.+) \(\s*(\d+\.\d)%\)  (.+)$/,
       State::TABLE_ROW
-    ),
+    )
   ]
 
   def initialize

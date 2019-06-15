@@ -8,16 +8,16 @@ describe Fastlane::Actions::CompilationTimeProfilerAction do
       allow(File).to receive(:read).and_call_original
       allow(File).to receive(:read).with(buildlog_file).and_return('')
       Fastlane::Actions::CompilationTimeProfilerAction.run(
-         project_paths: ["#{fixture}/ExampleProject/ExampleProject.xcodeproj"],
-         buildlog_path: buildlog_dir,
-         action: proc do
+        project_paths: ["#{fixture}/ExampleProject/ExampleProject.xcodeproj"],
+        buildlog_path: buildlog_dir,
+        action: proc do
           config = {
             buildlog_path: buildlog_dir,
             scheme: "ExampleProject",
-            workspace: "#{fixture}/ExampleWorkspace.xcworkspace",
+            workspace: "#{fixture}/ExampleWorkspace.xcworkspace"
           }
           Fastlane::Actions::RunTestsAction.run(config)
-         end
+        end
       )
     end
   end
