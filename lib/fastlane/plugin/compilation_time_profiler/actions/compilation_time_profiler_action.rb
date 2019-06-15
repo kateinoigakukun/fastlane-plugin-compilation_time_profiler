@@ -26,7 +26,7 @@ module Fastlane
         project = Xcodeproj::Project.open(project_path)
         project.targets.each do |target|
           target.build_configurations.each do |config|
-            config.build_settings['OTHER_SWIFT_FLAGS'] = '-Xfrontend -debug-time-compilation'
+            config.build_settings['OTHER_SWIFT_FLAGS'] = "-Xfrontend -debug-time-compilation #{config.build_settings['OTHER_SWIFT_FLAGS']}"
             config.build_settings['SWIFT_WHOLE_MODULE_OPTIMIZATION'] = 'YES'
           end
         end
