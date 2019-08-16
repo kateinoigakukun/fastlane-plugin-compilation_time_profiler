@@ -1,0 +1,2 @@
+OTHER_SWIFT_FLAGS = $(inherit) -Xfrontend -debug-time-compilation
+SWIFT_WHOLE_MODULE_OPTIMIZATION = YES

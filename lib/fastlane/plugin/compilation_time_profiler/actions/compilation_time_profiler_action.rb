@@ -5,48 +5,14 @@ module Fastlane
   module Actions
     class CompilationTimeProfilerAction < Action
       def self.run(params)
-        params[:project_paths].each do |project_path|
-          backup_project(project_path)
-          override_config(project_path)
-        end
+        ENV["XCODE_XCCONFIG_FILE"] = File.expand_path("../../resources/profile.xcconfig", __FILE__)
         params[:action].call
-        params[:project_paths].each do |project_path|
-          restore_projects(project_path)
-        end
-
         parser = CompilationStatisticsParser.new
         buildlog_file = Dir.glob("#{params[:buildlog_path]}/*.log").first
         File.read(buildlog_file).lines.each do |line|
           parser.parse(line)
         end
         parser.finalize
-      end
-
-      def self.override_config(project_path)
-        project = Xcodeproj::Project.open(project_path)
-        project.targets.each do |target|
-          target.build_configurations.each do |config|
-            config.build_settings['OTHER_SWIFT_FLAGS'] = "-Xfrontend -debug-time-compilation #{config.build_settings['OTHER_SWIFT_FLAGS']}"
-            config.build_settings['SWIFT_WHOLE_MODULE_OPTIMIZATION'] = 'YES'
-          end
-        end
-        project.save(project_path)
-      end
-
-      def self.backup_project(project_path)
-        FileUtils.remove_dir(backup_project_path(project_path), force: true)
-        FileUtils.cp_r(project_path, backup_project_path(project_path))
-      end
-
-      def self.restore_projects(project_path)
-        FileUtils.remove_dir(project_path)
-        FileUtils.move(backup_project_path(project_path), project_path, force: true)
-      end
-
-      def self.backup_project_path(original_project_path)
-        original_project = Pathname.new(original_project_path)
-        backup_project_name = original_project.basename.sub(/(.+)\./) { "#{$1}_Profile." }
-        original_project.dirname.join(backup_project_name).to_s
       end
 
       def self.available_options

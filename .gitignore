@@ -64,3 +64,4 @@ fastlane/report.xml
 coverage
 test-results
 vendor
+.idea
