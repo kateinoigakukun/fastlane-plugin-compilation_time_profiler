@@ -5,6 +5,9 @@ module Fastlane
   module Actions
     class CompilationTimeProfilerAction < Action
       def self.run(params)
+        if params[:project_paths]
+          UI.deprecated("The 'project_paths' parameter is not used anymore. Please just remove it")
+        end
         ENV["XCODE_XCCONFIG_FILE"] = File.expand_path("../../resources/profile.xcconfig", __FILE__)
         params[:action].call
         parser = CompilationStatisticsParser.new
