@@ -42,10 +42,6 @@ fastlane add_plugin compilation_time_profiler
 buildlog_dir = Dir.mktmpdir
 
 compilation_time_profiler(
-  project_paths: [ # projects path to profile performance
-    "./path/to/Project.xcodeproj",
-    "./path/to/OtherProject.xcodeproj"
-  ],
   buildlog_path: buildlog_dir,
   action: proc do # build action like run_tests or build_ios_app
     run_tests(
