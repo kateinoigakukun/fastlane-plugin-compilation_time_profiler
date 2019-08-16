@@ -23,7 +23,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(
             key: :project_paths,
             description: "Project paths to profile",
-            optional: false,
+            optional: true,
             is_string: false,
             type: Array
           ),
